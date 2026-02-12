@@ -1,0 +1,13 @@
+import type { NamedStyles, StyleSheetData } from '~/styles';
+
+export const useStyle = <T, N extends string, S extends NamedStyles<S>>(
+  data: StyleSheetData<N, T, S>,
+  name?: N,
+): [S, T, N] => {
+  const resolvedName = name || data.appearanceProvider();
+  const theme = data.themes[resolvedName];
+
+  const styles = data.styles[resolvedName];
+
+  return [styles, theme, resolvedName];
+};
