@@ -12,6 +12,7 @@ import { productsSagas , productsSlice } from './products';
 import { genericProductsSagas , genericProductsSlice } from './genericProducts';
 import { accountSagas , accountSlice } from './account';
 import { usersSlice } from './users';
+import { cartSlice } from './cart/slice';
 
 import { EStateName } from './types';
 
@@ -39,6 +40,13 @@ const accountPersistConfig: PersistConfig<any> = {
   whitelist: ['lang'],
 };
 
+const cartPersistConfig: PersistConfig<any> = {
+  key: EStateName.cart,
+  storage: AsyncStorage,
+  stateReconciler: autoMergeLevel2,
+  whitelist: ['items'],
+};
+
 // Combine reducers
 const rootReducer = combineReducers({
   [EStateName.common]: commonSlice.reducer,
@@ -50,6 +58,7 @@ const rootReducer = combineReducers({
   [EStateName.products]: productsSlice.reducer,
   [EStateName.genericProducts]: genericProductsSlice.reducer,
   [EStateName.users]: usersSlice.reducer,
+  [EStateName.cart]: persistReducer(cartPersistConfig, cartSlice.reducer),
 });
 
 // Configure store
