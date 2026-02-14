@@ -1,6 +1,3 @@
-import Config from 'react-native-config';
-
 export const CONFIG = {
-  ...Config,
-  ...(Config as any)?.getConstants(),
+  // const apiUrl = process.env.EXPO_PUBLIC_API_URL; // example
 };

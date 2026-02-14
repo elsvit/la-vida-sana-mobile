@@ -4,13 +4,13 @@ import {
   addSellerProducts,
   fetchProducts,
 } from './slice';
-import { supabaseService } from '../../../LaVidaSana/src/services/supabase/supabase';
+import { supabaseService } from '~/services/supabase/supabase';
 import { takeLatestWithFetchable } from '../helpers/fetchableHandler';
 import { call } from 'redux-saga/effects';
 import { put } from 'redux-saga/effects';
 import { parseSupabaseProductsToStoreFormat } from './helpers';
-import { ESeller } from '../../../LaVidaSana/src/types/IProduct';
-import { IProductCategory } from '../../../LaVidaSana/src/types/IProduct';
+import { ESeller } from '~/types/IProduct';
+import { IProductCategory } from '~/types/IProduct';
 
 function* fetchSellerProductsSaga(
   seller: ESeller,

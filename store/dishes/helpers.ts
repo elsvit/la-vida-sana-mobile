@@ -1,10 +1,10 @@
 import {
   IDatabaseDishProducts,
   IDatabaseDishes,
-} from '../../../LaVidaSana/src/services/supabase/dishes/types';
-import { ESeller } from '../../../LaVidaSana/src/types/IProduct';
-import { EGenericSeller } from '../../../LaVidaSana/src/types/IGenericProduct';
-import { ESizeFormat } from '../../../LaVidaSana/src/types/ISize';
+} from '~/services/supabase/dishes/types';
+import { ESeller } from '~/types/IProduct';
+import { EGenericSeller } from '~/types/IGenericProduct';
+import { ESizeFormat } from '~/types/ISize';
 
 // Helper function to convert Supabase dishes to store format
 export function parseSupabaseDishesToStoreFormat(

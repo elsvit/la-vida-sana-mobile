@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IStateUsers } from './types';
-import { IUser } from '../../../LaVidaSana/src/types/IUser';
+import { IUser } from '~/types/IUser';
 import { EStateName } from '../types';
 import {
   createGenericEntityAdapter,

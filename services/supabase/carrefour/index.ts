@@ -1,0 +1,1 @@
+export { SupabaseCarrefourService } from './carrefour';

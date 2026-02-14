@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { RootStateT } from '../store';
 import { productsAdapter } from './slice';
-import { ESeller } from '../../../LaVidaSana/src/types/IProduct';
+import { ESeller } from '~/types/IProduct';
 
 // Common seller state selector - this is the key improvement
 export const getSellerState = (seller: ESeller) => (state: RootStateT) => {

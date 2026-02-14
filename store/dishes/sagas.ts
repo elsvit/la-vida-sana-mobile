@@ -1,11 +1,11 @@
 import { select, takeLatest } from 'redux-saga/effects';
 import { fetchDishes, addDishes } from './slice';
-import { supabaseService } from '../../../LaVidaSana/src/services/supabase/supabase';
+import { supabaseService } from '~/services/supabase/supabase';
 import { takeLatestWithFetchable } from '../helpers/fetchableHandler';
 import { call } from 'redux-saga/effects';
 import { put } from 'redux-saga/effects';
 import { IStateDishes } from './types';
-import { IDish } from '../../../LaVidaSana/src/types/IDish';
+import { IDish } from '~/types/IDish';
 import { RootStateT } from '../store';
 import { parseSupabaseDishesToStoreFormat } from './helpers';
 

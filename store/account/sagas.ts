@@ -3,7 +3,7 @@ import { select } from 'redux-saga/effects';
 import { takeLatestWithFetchable } from '../helpers/fetchableHandler';
 import { call } from 'redux-saga/effects';
 import { put } from 'redux-saga/effects';
-import { LocalizationService } from '../../../LaVidaSana/src/services/localization/localization';
+import { LocalizationService } from '~/services/localization/localization';
 import { selectLang } from './selectors';
 
 function* initLanguageSaga(): Generator<any, void, any> {

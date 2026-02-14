@@ -1,0 +1,1 @@
+export { SupabaseMercadonaService } from './mercadona';

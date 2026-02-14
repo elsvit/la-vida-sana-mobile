@@ -1,7 +1,7 @@
 import { addGenericProducts, fetchGenericProducts } from './slice';
 import { IStateGenericProducts } from './types';
 import { RootStateT } from '../store';
-import { supabaseService } from '../../../LaVidaSana/src/services/supabase/supabase';
+import { supabaseService } from '~/services/supabase/supabase';
 import { takeLatestWithFetchable } from '../helpers/fetchableHandler';
 import { call, select } from 'redux-saga/effects';
 import { put } from 'redux-saga/effects';
@@ -9,7 +9,7 @@ import {
   parseSupabaseGenericProductsToStoreFormat,
   parseSupabaseGenericCategoriesToStoreFormat,
 } from './helpers';
-import { IGenericProduct } from '../../../LaVidaSana/src/types/IGenericProduct';
+import { IGenericProduct } from '~/types/IGenericProduct';
 
 function* fetchGenericProductsSaga(): Generator<any, void, any> {
   if (!supabaseService) {

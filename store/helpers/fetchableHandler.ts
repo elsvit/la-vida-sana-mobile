@@ -9,7 +9,7 @@ import { call, takeLatest, ForkEffect, put } from 'redux-saga/effects';
 import { Saga } from '../types';
 import { setError, setLoaded, setLoading } from '../common/slice';
 import { ActionApiT } from '../common/types';
-import { IError } from '../../../LaVidaSana/src/types/IError';
+import { IError } from '~/types/IError';
 
 export function* captureError(error: any, context?: any) {
   // ToDo: add user notification handler

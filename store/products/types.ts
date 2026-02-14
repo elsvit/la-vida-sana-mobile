@@ -1,5 +1,5 @@
 import { EntityState } from '@reduxjs/toolkit';
-import { ESeller, IProduct, IProductCategory } from '../../../LaVidaSana/src/types/IProduct';
+import { ESeller, IProduct, IProductCategory } from '~/types/IProduct';
 
 export interface IProductsSellerState extends EntityState<IProduct, string> {
   categories: IProductCategory[];

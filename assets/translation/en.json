@@ -1,0 +1,212 @@
+{
+  "jsonLanguage": "English",
+  "common": {
+    "completed": "Completed",
+    "date": "Date",
+    "description": "Description",
+    "disabled": "Disabled",
+    "expirationTime": "Expiration Time",
+    "loading": "Loading...",
+    "no_data_found": "No data found",
+    "rating": "Rating",
+    "step": "Step",
+    "stepIndicator": "Step {{step}} of {{totalSteps}}",
+    "tags": "Tags"
+  },
+  "button": {
+    "add": "Add",
+    "cancel": "Cancel",
+    "save": "Save",
+    "next": "Next",
+    "previous": "Previous",
+    "done": "Done",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm"
+  },
+  "sizes": {
+    "small": "Small",
+    "medium": "Medium",
+    "large": "Large",
+    "kg": "kg",
+    "g": "g",
+    "ml": "ml",
+    "ud": "ud",
+    "dozen": "dozen",
+    "m": "m",
+    "cm": "cm",
+    "mm": "mm"
+  },
+  "time": {
+    "day": "day",
+    "days": "days",
+    "month": "month",
+    "months": "months",
+    "year": "year",
+    "years": "years",
+    "h": "h",
+    "hour": "hour",
+    "hours": "hours",
+    "min": "min",
+    "minute": "minute",
+    "minutes": "minutes",
+    "sec": "sec",
+    "second": "second",
+    "seconds": "seconds"
+  },
+  "dishes": {
+    "cookTime": "Cook Time",
+    "course": "Course",
+    "cuisine": "Cuisine",
+    "dietaryCategory": "Dietary Category",
+    "difficulty": "Difficulty",
+    "dish": "Dish",
+    "dishes": "Dishes",
+    "mealTime": "Meal Time",
+    "minPortions": "Min Portions",
+    "no_dishes_found": "No dishes found",
+    "orderIndex": "Order Index",
+    "portions": "Portions",
+    "preparationMethod": "Preparation Method",
+    "prepTime": "Prep Time",
+    "recipe": "Recipe",
+    "ECuisine": {
+      "spanish": "Spanish",
+      "italian": "Italian",
+      "french": "French",
+      "chinese": "Chinese",
+      "indian": "Indian",
+      "mexican": "Mexican",
+      "japanese": "Japanese",
+      "american": "American",
+      "ukrainian": "Ukrainian",
+      "other": "Other"
+    },
+    "ECourse": {
+      "appetizers": "Appetizers",
+      "soups": "Soups",
+      "salads": "Salads",
+      "main_courses": "Main courses",
+      "side_dishes": "Side dishes",
+      "desserts": "Desserts",
+      "beverages": "Beverages",
+      "other": "Other"
+    },
+    "EDietaryCategory": {
+      "vegetarian": "Vegetarian",
+      "vegan": "Vegan",
+      "gluten_free": "Gluten free",
+      "keto": "Keto",
+      "low_carb": "Low carb",
+      "other": "Other"
+    },
+    "EDifficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "other": "Other"
+    },
+    "EMealTime": {
+      "breakfast": "Desayuno",
+      "brunch": "Brunch",
+      "late_night": "Late Night",
+      "lunch": "Almuerzo",
+      "dinner": "Cena",
+      "snacks": "Snacks",
+      "other": "Otro"
+    },
+    "EPreparationMethod": {
+      "grilled": "Grilled",
+      "fried": "Fried",
+      "baked": "Baked",
+      "steamed": "Steamed",
+      "boiled": "Boiled",
+      "raw": "Raw",
+      "other": "Other"
+    }
+  },
+  "home": {
+    "title": "Home"
+  },
+  "menu": {
+    "title": "Menu"
+  },
+  "more": {
+    "title": "More",
+    "add_user": "Add User",
+    "language": "Language",
+    "settings": "Settings",
+    "users": "Users"
+  },
+  "products": {
+    "brand": "Brand",
+    "calories": "Calories",
+    "carbohydrates": "Carbohydrates",
+    "fat": "Fat",
+    "fiber": "Fiber",
+    "image": "Image",
+    "images": "Images",
+    "minerals": "Minerals",
+    "monounsaturated_fat": "Monounsaturated Fat",
+    "nutritional_information": "Nutritional Information",
+    "packaging": "Packaging",
+    "polyunsaturated_fat": "Polyunsaturated Fat",
+    "price": "Price",
+    "price_per_unit": "Price per Unit",
+    "product": "Product",
+    "product_link": "Product Link",
+    "products": "Products",
+    "protein": "Protein",
+    "quantity": "Quantity",
+    "salt": "Salt",
+    "saturated_fat": "Saturated Fat",
+    "seller": "Seller",
+    "size": "Size",
+    "size_format": "Size Format",
+    "sodium": "Sodium",
+    "sugar": "Sugar",
+    "thumbnail": "Thumbnail",
+    "ud_size": "UD Size",
+    "ud_size_format": "UD Size Format",
+    "vitamins": "Vitamins"
+  },
+  "sellers": {
+    "title": "Sellers",
+    "mercadona": "Mercadona",
+    "carrefour": "Carrefour"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language"
+  },
+  "shopping": {
+    "title": "Shopping"
+  },
+  "storage": {
+    "title": "Storage"
+  },
+  "users": {
+    "user": "User",
+    "users": "Users",
+    "add_user": "Add User",
+    "edit_user": "Edit User",
+    "personal_information": "Personal information",
+    "complete_your_profile": "Complete your profile",
+    "personalize_your_health_journey": "Personalize your health journey",
+    "helps_us_understand_your_body_basics": "Helps us understand your body basics",
+    "name": "Name",
+    "lastName": "Last Name",
+    "sex": "Sex",
+    "age": "Age",
+    "weight": "Weight",
+    "height": "Height",
+    "activityLevel": "Activity Level",
+    "allergens": "Allergens",
+    "goal": "Goal",
+    "dislikedProducts": "Disliked Products",
+    "favoriteProducts": "Favorite Products",
+    "favoriteDishes": "Favorite Dishes",
+    "male": "Male",
+    "female": "Female"
+  }
+}
