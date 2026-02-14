@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { IError } from '../../../LaVidaSana/src/types/IError';
+import { IError } from '~/types/IError';
 
 export enum ECommonActions {
   LOADING = 'LOADING',

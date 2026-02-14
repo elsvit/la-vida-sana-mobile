@@ -4,6 +4,7 @@ import { IStateCommon } from './common/types';
 import { IStateProducts } from './products/types';
 import { IStateGenericProducts } from './genericProducts/types';
 import { IStateUsers } from './users/types';
+import { IStateCart } from './cart/types';
 
 export enum EStateName {
   common = 'common',
@@ -12,6 +13,7 @@ export enum EStateName {
   products = 'products',
   genericProducts = 'genericProducts',
   users = 'users',
+  cart = 'cart',
 }
 
 export interface IState {
@@ -21,6 +23,7 @@ export interface IState {
   [EStateName.products]: IStateProducts;
   [EStateName.genericProducts]: IStateGenericProducts;
   [EStateName.users]: IStateUsers;
+  [EStateName.cart]: IStateCart;
 }
 
 export type Saga = (...args: any[]) => Generator<any>;

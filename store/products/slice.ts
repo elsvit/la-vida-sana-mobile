@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IStateProducts } from './types';
-import { ESeller, IProduct, IProductCategory } from '../../../LaVidaSana/src/types/IProduct';
+import { ESeller, IProduct, IProductCategory } from '~/types/IProduct';
 import { EStateName } from '../types';
 import {
   createGenericEntityAdapter,

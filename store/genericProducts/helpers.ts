@@ -1,5 +1,5 @@
-import { IGenericProduct } from '../../../LaVidaSana/src/types/IGenericProduct';
-import { ESizeFormat } from '../../../LaVidaSana/src/types/ISize';
+import { IGenericProduct } from '~/types/IGenericProduct';
+import { ESizeFormat } from '~/types/ISize';
 
 /**
  * Converts Supabase generic products data to the required format for the store

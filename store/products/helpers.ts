@@ -1,4 +1,4 @@
-import { ESeller, IProduct } from '../../../LaVidaSana/src/types/IProduct';
+import { ESeller, IProduct } from '~/types/IProduct';
 
 /**
  * Converts Supabase products data to the required format for the store

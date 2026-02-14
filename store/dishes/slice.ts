@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IStateDishes } from './types';
-import { IDish } from '../../../LaVidaSana/src/types/IDish';
+import { IDish } from '~/types/IDish';
 import { EStateName } from '../types';
 import {
   createGenericEntityAdapter,

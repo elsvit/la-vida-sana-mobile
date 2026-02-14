@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ELang } from '../../../LaVidaSana/src/types/ILang';
+import { ELang } from '~/types/ILang';
 import { ERole, IStateAccount } from './types';
 // import { IUser } from '~/types/IUser';
 import { EStateName } from '../types';

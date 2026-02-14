@@ -1,4 +1,4 @@
 import { EntityState } from '@reduxjs/toolkit';
-import { IUser } from '../../../LaVidaSana/src/types/IUser';
+import { IUser } from '~/types/IUser';
 
 export interface IStateUsers extends EntityState<IUser, string> {}

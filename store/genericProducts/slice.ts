@@ -3,7 +3,7 @@ import { IStateGenericProducts } from './types';
 import {
   IGenericProduct,
   IGenericProductCategory,
-} from '../../../LaVidaSana/src/types/IGenericProduct';
+} from '~/types/IGenericProduct';
 import { EStateName } from '../types';
 import {
   createGenericEntityAdapter,

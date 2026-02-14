@@ -1,4 +1,4 @@
-import { ELang } from '../../../LaVidaSana/src/types/ILang';
+import { ELang } from '~/types/ILang';
 
 export enum ERole {
   admin = 'admin',

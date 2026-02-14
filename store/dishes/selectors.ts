@@ -7,7 +7,7 @@ import {
   EDietaryCategory,
   EMealTime,
   EDishDifficulty,
-} from '../../../LaVidaSana/src/types/IDish';
+} from '~/types/IDish';
 import { fetchDishes } from './slice';
 
 // Base selectors

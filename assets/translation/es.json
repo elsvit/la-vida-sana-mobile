@@ -1,0 +1,212 @@
+{
+  "jsonLanguage": "Español",
+  "common": {
+    "completed": "Completado",
+    "date": "Fecha",
+    "description": "Descripción",
+    "disabled": "Deshabilitado",
+    "expirationTime": "Tiempo de Caducidad",
+    "loading": "Cargando...",
+    "no_data_found": "No se encontraron datos",
+    "rating": "Puntuación",
+    "step": "Paso",
+    "stepIndicator": "Paso {{step}} de {{totalSteps}}",
+    "tags": "Etiquetas"
+  },
+  "button": {
+    "add": "Agregar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "done": "Listo",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar"
+  },
+  "sizes": {
+    "small": "Pequeño",
+    "medium": "Mediano",
+    "large": "Grande",
+    "kg": "kg",
+    "g": "g",
+    "ml": "ml",
+    "ud": "ud",
+    "dozen": "docena",
+    "m": "m",
+    "cm": "cm",
+    "mm": "mm"
+  },
+  "time": {
+    "day": "día",
+    "days": "días",
+    "month": "mes",
+    "months": "meses",
+    "year": "año",
+    "years": "años",
+    "h": "h",
+    "hour": "hora",
+    "hours": "horas",
+    "min": "min",
+    "minute": "minuto",
+    "minutes": "minutos",
+    "sec": "seg",
+    "second": "segundo",
+    "seconds": "segundos"
+  },
+  "dishes": {
+    "cookTime": "Tiempo de Cocción",
+    "course": "Curso",
+    "cuisine": "Cocina",
+    "dietaryCategory": "Categoría Dietética",
+    "difficulty": "Dificultad",
+    "dish": "Plato",
+    "dishes": "Platos",
+    "mealTime": "Hora de la Comida",
+    "minPortions": "Mínimo de Portiones",
+    "no_dishes_found": "No se encontraron platos",
+    "orderIndex": "Índice de Orden",
+    "portions": "Portiones",
+    "preparationMethod": "Método de Preparación",
+    "prepTime": "Tiempo de Preparación",
+    "recipe": "Receta",
+    "ECuisine": {
+      "spanish": "Española",
+      "italian": "Italiana",
+      "french": "Francesa",
+      "mexican": "Mexicana",
+      "ukrainian": "Ucraniana",
+      "chinese": "China",
+      "indian": "India",
+      "japanese": "Japonesa",
+      "american": "Americana",
+      "other": "Otra"
+    },
+    "ECourse": {
+      "appetizers": "Aperitivos",
+      "soups": "Sopas",
+      "salads": "Ensaladas",
+      "main_courses": "Platos principales",
+      "side_dishes": "Acompañamientos",
+      "desserts": "Postres",
+      "beverages": "Bebidas",
+      "other": "Otro"
+    },
+    "EDietaryCategory": {
+      "vegetarian": "Vegetariana",
+      "vegan": "Vegana",
+      "gluten_free": "Sin gluten",
+      "keto": "Keto",
+      "low_carb": "Baja en carbohidratos",
+      "other": "Otra"
+    },
+    "EDifficulty": {
+      "easy": "Fácil",
+      "medium": "Media",
+      "hard": "Difícil",
+      "other": "Otra"
+    },
+    "EMealTime": {
+      "breakfast": "Desayuno",
+      "brunch": "Brunch",
+      "late_night": "Noche",
+      "lunch": "Almuerzo",
+      "dinner": "Cena",
+      "snacks": "Snacks",
+      "other": "Otro"
+    },
+    "EPreparationMethod": {
+      "grilled": "A la parrilla",
+      "fried": "Frito",
+      "baked": "Horneado",
+      "steamed": "Al vapor",
+      "boiled": "Hervido",
+      "raw": "Crudo",
+      "other": "Otro"
+    }
+  },
+  "home": {
+    "title": "Inicio"
+  },
+  "menu": {
+    "title": "Menú"
+  },
+  "more": {
+    "title": "Más",
+    "add_user": "Agregar Usuario",
+    "language": "Idioma",
+    "settings": "Ajustes",
+    "users": "Usuarios"
+  },
+  "products": {
+    "brand": "Marca",
+    "calories": "Calorías",
+    "carbohydrates": "Carbohidratos",
+    "fat": "Grasa",
+    "fiber": "Fibra",
+    "image": "Imagen",
+    "images": "Imágenes",
+    "minerals": "Minerales",
+    "monounsaturated_fat": "Grasa Monoinsaturada",
+    "nutritional_information": "Información Nutricional",
+    "packaging": "Empaquetado",
+    "polyunsaturated_fat": "Grasa Poliinsaturada",
+    "price": "Precio",
+    "price_per_unit": "Precio por Unidad",
+    "product": "Producto",
+    "product_link": "Enlace del Producto",
+    "products": "Productos",
+    "protein": "Proteína",
+    "quantity": "Cantidad",
+    "salt": "Sal",
+    "saturated_fat": "Grasa Saturada",
+    "seller": "Vendedor",
+    "size": "Tamaño",
+    "size_format": "Formato de Tamaño",
+    "sodium": "Sodio",
+    "sugar": "Azúcar",
+    "thumbnail": "Miniatura",
+    "ud_size": "Tamaño Unitario",
+    "ud_size_format": "Formato de Tamaño Unitario",
+    "vitamins": "Vitaminas"
+  },
+  "sellers": {
+    "title": "Vendedores",
+    "mercadona": "Mercadona",
+    "carrefour": "Carrefour"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "language": "Idioma"
+  },
+  "shopping": {
+    "title": "Compra"
+  },
+  "storage": {
+    "title": "Nevera"
+  },
+  "users": {
+    "user": "Usuario",
+    "users": "Usuarios",
+    "add_user": "Agregar Usuario",
+    "edit_user": "Editar Usuario",
+    "personal_information": "Información Personal",
+    "complete_your_profile": "Completa tu perfil",
+    "personalize_your_health_journey": "Personaliza tu viaje de salud",
+    "helps_us_understand_your_body_basics": "Ayúdanos a entender tus datos básicos",
+    "name": "Nombre",
+    "lastName": "Apellido",
+    "sex": "Sexo",
+    "age": "Edad",
+    "weight": "Peso",
+    "height": "Altura",
+    "activityLevel": "Nivel de Actividad",
+    "allergens": "Alergias",
+    "goal": "Objetivo",
+    "dislikedProducts": "Productos No Deseados",
+    "favoriteProducts": "Productos Favoritos",
+    "favoriteDishes": "Platos Favoritos",
+    "male": "Masculino",
+    "female": "Femenino"
+  }
+}
