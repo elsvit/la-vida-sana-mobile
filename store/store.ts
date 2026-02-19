@@ -1,27 +1,24 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { configureStore } from '@reduxjs/toolkit';
-import { combineReducers } from 'redux';
-import { persistReducer, persistStore } from 'redux-persist';
-import { PersistConfig } from 'redux-persist/es/types';
+// store/index.ts
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import createSagaMiddleware from 'redux-saga';
+import { all } from 'redux-saga/effects';
+import { PersistConfig, persistReducer, persistStore } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { Persistor } from 'redux-persist/lib/types';
-import createSagaMiddleware from 'redux-saga';
+import logger from 'redux-logger';
 
-import { dishesSagas , dishesSlice } from './dishes';
-import { productsSagas , productsSlice } from './products';
-import { genericProductsSagas , genericProductsSlice } from './genericProducts';
-import { accountSagas , accountSlice } from './account';
+import { getStorage } from '~/services/storage/storage';
+import { accountSagas, accountSlice, IStateAccount } from './account';
+import { cartSlice, IStateCart } from './cart';
+import { dishesSagas, dishesSlice } from './dishes';
+import { productsSagas, productsSlice } from './products';
+import { genericProductsSagas, genericProductsSlice } from './genericProducts';
 import { usersSlice } from './users';
-import { cartSlice } from './cart/slice';
-
-import { EStateName } from './types';
-
-import { all } from 'redux-saga/effects';
 import { commonSlice } from './common/slice';
+import { EStateName } from './types';
+import { IS_WEB } from '~/constants';
 
-// Change this import to use CommonJS require syntax for Hermes compatibility
-// const createSagaMiddleware = require('redux-saga').default;
-
+// Root saga
 function* rootSaga() {
   yield all([
     ...dishesSagas,
@@ -31,18 +28,20 @@ function* rootSaga() {
   ]);
 }
 
-const sagaMiddleware = createSagaMiddleware();
+// Storage selection
+const storage = getStorage()
 
-const accountPersistConfig: PersistConfig<any> = {
+// Persist configs
+const accountPersistConfig: PersistConfig<IStateAccount> = {
   key: EStateName.account,
-  storage: AsyncStorage,
+  storage,
   stateReconciler: autoMergeLevel2,
   whitelist: ['lang'],
 };
 
-const cartPersistConfig: PersistConfig<any> = {
+const cartPersistConfig: PersistConfig<IStateCart> = {
   key: EStateName.cart,
-  storage: AsyncStorage,
+  storage,
   stateReconciler: autoMergeLevel2,
   whitelist: ['items'],
 };
@@ -50,23 +49,23 @@ const cartPersistConfig: PersistConfig<any> = {
 // Combine reducers
 const rootReducer = combineReducers({
   [EStateName.common]: commonSlice.reducer,
-  [EStateName.account]: persistReducer(
-    accountPersistConfig,
-    accountSlice.reducer,
-  ),
+  [EStateName.account]: IS_WEB ? accountSlice.reducer : persistReducer<IStateAccount>(accountPersistConfig, accountSlice.reducer),
   [EStateName.dishes]: dishesSlice.reducer,
   [EStateName.products]: productsSlice.reducer,
   [EStateName.genericProducts]: genericProductsSlice.reducer,
   [EStateName.users]: usersSlice.reducer,
-  [EStateName.cart]: persistReducer(cartPersistConfig, cartSlice.reducer),
+  [EStateName.cart]: IS_WEB ? cartSlice.reducer : persistReducer<IStateCart>(cartPersistConfig, cartSlice.reducer),
 });
 
-// Configure store
+// Saga middleware
+const sagaMiddleware = createSagaMiddleware();
+
+// Configure store once
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      thunk: false, // disable thunk because you're using saga
+      thunk: false,
       serializableCheck: {
         ignoredActions: [
           'persist/PERSIST',
@@ -77,15 +76,15 @@ export const store = configureStore({
           'persist/REGISTER',
         ],
       },
-    }).concat(sagaMiddleware),
+    }).concat(__DEV__ ? [sagaMiddleware, logger] : [sagaMiddleware]),
   devTools: __DEV__,
 });
 
 sagaMiddleware.run(rootSaga);
 
-export const persistor: Persistor = persistStore(store);
+// export const persistor: Persistor = persistStore(store);
+export const persistor: Persistor | null = IS_WEB ? null : persistStore(store);
 
+// Types
 export type RootStateT = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-
-// export default store;
