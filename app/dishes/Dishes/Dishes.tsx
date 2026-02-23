@@ -8,7 +8,7 @@ import { useStyle } from '~/styles';
 import { themedStyles } from './styles';
 import { FlatList, View, Text } from 'react-native';
 // import { IDish } from '~/types/IDish';
-import { DishListItem } from '~/components/DishesListItem';
+import { DishListItem } from '~/components/dishes/DishesListItem';
 import { Space } from '~/components/ui/Space';
 
 export const Dishes = () => {

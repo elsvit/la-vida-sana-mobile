@@ -47,13 +47,17 @@ export const ScreenHeader: React.FC<IScreenHeader> = ({
   };
 
   const renderBackButton = () => {
+    console.log('TEST_50 handleBackPress hasBackButton', hasBackButton);
     if (!hasBackButton) return null;
 
-    const hasGoBack = router.canGoBack();
-
     const handleBackPress = () => {
-      if (hasGoBack) router.back();
-      else router.push('/');
+      if (router.canGoBack()) {
+        console.log('TEST_54 handleBackPress goBack');
+        router.back();
+      } else {
+        console.log('TEST_56 handleBackPress replace');
+        router.replace('/');
+      }
     };
 
     return (

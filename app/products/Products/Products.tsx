@@ -9,7 +9,7 @@ import { ScrollView, Text, TouchableOpacity, View, } from 'react-native';
 // import { IDish } from '~/types/IDish';
 import { Space } from '~/components/ui/Space';
 import { ESeller } from '~/types/IProduct';
-import { ProductList } from '~/components/blocks/ProductList';
+import { ProductList } from '~/components/products/ProductList';
 // import { Divider } from 'react-native-paper';
 import MercadonaIcon from '~/assets/svg/sellers/mercadona.svg';
 import CarrefourIcon from '~/assets/svg/sellers/carrefour.svg';
