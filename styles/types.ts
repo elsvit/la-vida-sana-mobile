@@ -38,6 +38,8 @@ export enum TextVariant {
 export type ThemeColors = {
   male: string;
   female: string;
+  primaryGreen: string;
+  secondaryBlue: string;
 
   background: {
     primary: string;
