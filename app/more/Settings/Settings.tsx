@@ -3,7 +3,7 @@ import { ScrollView, View } from 'react-native';
 import { List } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { LocalizationService, t } from '~/services/localization/localization';
-import { ScreenHeader } from '~/components/blocks/ScreenHeader';
+// import { ScreenHeader } from '~/components/blocks/ScreenHeader';
 import { SafeAreaBackground } from '~/components/blocks/SafeAreaBackground';
 import { setLanguage } from '~/store/account/slice';
 import { selectLang } from '~/store/account/selectors';
@@ -11,12 +11,19 @@ import { ELang } from '~/types/ILang';
 import { themedStyles } from './styles';
 import { palette, useStyle } from '~/styles';
 import CheckIcon from '~/assets/svg/common/check.svg';
+import { useNavigation } from 'expo-router';
+import { useI18nHeaderTitle } from '~/hooks/useI18nHeaderTitle';
 
 export default function Settings() {
   const dispatch = useDispatch();
+  // const navigation = useNavigation();
+
   const [styles] = useStyle(themedStyles);
   const currentLang = useSelector(selectLang);
-  const title = t('settings.title');
+
+  // Keep native header title in sync with language
+  useI18nHeaderTitle('settings.title');
+
   const handleLanguageChange = async (selectedLang: ELang) => {
     // Update Redux store
     if (selectedLang === currentLang) return;
@@ -35,12 +42,12 @@ export default function Settings() {
   ];
 
   return (
-    <SafeAreaBackground bgColor={palette.background.primary}>
-      <ScreenHeader
-        title={title}
-        hasBackButton
-        containerStyle={styles.headerContainer}
-      />
+    <SafeAreaBackground bgColor={palette.background.primary} hasTopInsets={false}>
+      {/*<ScreenHeader*/}
+      {/*  title={title}*/}
+      {/*  hasBackButton*/}
+      {/*  containerStyle={styles.headerContainer}*/}
+      {/*/>*/}
 
       <ScrollView>
         <List.Section>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StatusBar, Image, ImageSourcePropType } from 'react-native';
+import { Image, StatusBar, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { styles } from './styles';
@@ -13,6 +13,7 @@ export const SafeAreaBackground: React.FC<ISafeAreaBackground> = ({
   bgImg,
   bgColor,
   statusBarContent = StatusBarContent.DEFAULT,
+  hasTopInsets = true,
 }) => {
   const insets = useSafeAreaInsets();
 
@@ -37,7 +38,7 @@ export const SafeAreaBackground: React.FC<ISafeAreaBackground> = ({
         style={[
           styles.wrapperSafe,
           {
-            paddingTop: insets.top,
+            paddingTop: hasTopInsets ? insets.top : 0,
             paddingBottom: insets.bottom,
             paddingLeft: insets.left,
             paddingRight: insets.right,
