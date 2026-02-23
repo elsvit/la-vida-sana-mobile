@@ -3,36 +3,36 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ESeller } from './IProduct';
 
 export enum EMainTabs {
-  Home = 'MainTabs.Home',
-  Menu = 'MainTabs.Menu',
-  Storage = 'MainTabs.Storage',
-  Shopping = 'MainTabs.Shopping',
-  More = 'MainTabs.More',
+  Home = 'Home/Home',
+  Menu = 'Menu/Menu',
+  Storage = 'Storage/Storage',
+  Shopping = 'Shopping/Shopping',
+  More = 'More/More',
 }
 
 export enum EScreens {
-  MainTabs = 'MainTabs',
-  Settings = 'Screens.Settings',
-  UserAdd = 'Screens.UserAdd',
-  UserEdit = 'Screens.UserEdit',
-  Products = 'Screens.Products',
-  Product = 'Screens.Product',
-  Dishes = 'Screens.Dishes',
-  Dish = 'Screens.Dish',
+  // MainTabs = 'MainTabs',
+  Settings = 'more/Settings/Settings',
+  UserAdd = 'users/UserAdd',
+  UserEdit = 'users/UserEdit',
+  Products = 'products/Products/Products',
+  Product = 'products/Product/Product',
+  Dishes = 'dishes/Dishes/Dishes',
+  Dish = 'dishes/Dish/Dish',
 }
 
 export type ScreenRoutes = EMainTabs | EScreens;
 
 export type ScreenRoutesParams = {
-  [EScreens.MainTabs]: undefined;
+  // [EScreens.MainTabs]: undefined;
   [EMainTabs.Home]: undefined;
   [EMainTabs.Menu]: undefined;
   [EMainTabs.Storage]: undefined;
   [EMainTabs.Shopping]: undefined;
   [EMainTabs.More]: undefined;
   [EScreens.Settings]: undefined;
-  [EScreens.UserAdd]: undefined;
-  [EScreens.UserEdit]: { userId: string };
+  // [EScreens.UserAdd]: undefined;
+  // [EScreens.UserEdit]: { userId: string };
   [EScreens.Products]: { seller: ESeller };
   [EScreens.Product]: { productId: string; seller: ESeller };
   [EScreens.Dishes]: undefined;
