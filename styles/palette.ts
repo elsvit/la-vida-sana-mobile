@@ -6,6 +6,8 @@ import type { ThemeColors } from './types';
 const commonColors = {
   male: Colors.blue500,
   female: Colors.pink500,
+  primaryGreen: Colors.brightGreen700,
+  secondaryBlue: Colors.blue600,
 };
 
 export const lightPalette: ThemeColors = {

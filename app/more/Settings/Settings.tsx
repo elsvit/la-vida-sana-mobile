@@ -13,6 +13,7 @@ import { palette, useStyle } from '~/styles';
 import CheckIcon from '~/assets/svg/common/check.svg';
 import { useNavigation } from 'expo-router';
 import { useI18nHeaderTitle } from '~/hooks/useI18nHeaderTitle';
+import { CircleProgress } from "~/components/ui/CircleProgress/CircleProgress";
 
 export default function Settings() {
   const dispatch = useDispatch();
@@ -81,6 +82,9 @@ export default function Settings() {
             );
           })}
         </List.Section>
+        <View style={styles.progressContainer}>
+          <CircleProgress progress={70} />
+        </View>
       </ScrollView>
     </SafeAreaBackground>
   );

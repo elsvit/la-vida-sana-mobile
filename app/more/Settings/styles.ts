@@ -27,4 +27,8 @@ export const themedStyles = styleSheetFactory(palette => ({
     letterSpacing: 0.2,
     fontWeight: '700',
   },
+  progressContainer: {
+    alignItems: 'center',
+    marginTop: spacing(4),
+  },
 }));
