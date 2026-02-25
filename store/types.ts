@@ -16,6 +16,16 @@ export enum EStateName {
   cart = 'cart',
 }
 
+// export const EStateName = {
+//   common: 'common',
+//   account: 'account',
+//   dishes: 'dishes',
+//   products: 'products',
+//   genericProducts: 'genericProducts',
+//   users: 'users',
+//   cart: 'cart',
+// }
+
 export interface IState {
   [EStateName.common]: IStateCommon;
   [EStateName.account]: IStateAccount;

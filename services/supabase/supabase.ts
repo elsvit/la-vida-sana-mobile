@@ -574,14 +574,12 @@ class SupabaseService {
   // }
 }
 
-// Create and export a singleton instance
-// let supabaseServiceInstance: SupabaseService | null = null;
+// Create and export a lazy getter to avoid initializing during import time in tests
+export const getSupabaseService = (): SupabaseService | null => {
+  return SupabaseService.getInstance();
+};
 
-// export const getSupabaseService = (): SupabaseService | null => {
-//   return SupabaseService.getInstance();
-// };
-
-// For backward compatibility, export the instance
+// For backward compatibility, also export the instance (may be null in tests)
 export const supabaseService = SupabaseService.getInstance();
 
 // Export the class for testing or custom instances

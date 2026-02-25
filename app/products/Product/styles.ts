@@ -110,3 +110,5 @@ export const themedStyles = styleSheetFactory(palette => ({
     minWidth: 200,
   },
 }));
+
+export default themedStyles;

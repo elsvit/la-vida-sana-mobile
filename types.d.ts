@@ -14,6 +14,8 @@ type Maybe<T> = T | null | undefined;
 
 type RecordType<T> = Record<string, Maybe<T>>;
 
+type Persisted<T> = T & { _persist?: unknown };
+
 // declare module 'react-native-config' {
 //   getConstants: () => Record<string, string>;
 //   // export const SUPABASE_URL: string;

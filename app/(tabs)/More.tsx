@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { ScrollView } from 'react-native';
 import { Divider, List } from 'react-native-paper';
 import SettingsIcon from '~/assets/svg/more/settings.svg';
@@ -15,14 +15,23 @@ import { ScreenHeader } from '~/components/blocks/ScreenHeader';
 import { SafeAreaBackground } from '~/components/blocks/SafeAreaBackground';
 import { EScreens } from '~/types/INavigation';
 import { t } from '~/services/localization/localization';
-import { themedStyles } from './styles';
 import { useStyle } from '~/styles/hooks';
-import { IMoreItem } from './types';
 import { useSelector } from 'react-redux';
 import { selectAllUsers } from '~/store/users/selectors';
 import { ESex } from '~/types/IUser';
-import { palette } from '~/styles';
+import { palette, spacing, styleSheetFactory } from '~/styles';
 import { useRouter } from 'expo-router';
+import { SvgProps } from 'react-native-svg';
+
+export interface IMoreItem {
+  title: string;
+  Icon: FC<SvgProps>;
+  fill?: string; // Icon fill color
+  navigateTo?: EScreens;
+  navigateToParams?: any;
+  onPress?: () => void;
+  items?: IMoreItem[];
+}
 
 export default function More() {
   const router = useRouter();
@@ -86,18 +95,18 @@ export default function More() {
     navigateTo: EScreens | undefined,
     navigateToParams?: any,
   ) => {
-
-    navigateTo && router.push({
-      pathname: `/${navigateTo}` as any,
-      params: navigateToParams,
-    });
+    navigateTo &&
+      router.push({
+        pathname: `/${navigateTo}` as any,
+        params: navigateToParams,
+      });
   };
 
   const keyExtractor = (item: IMoreItem, index: number) =>
     `${item.title}-${index}`;
 
   return (
-    <SafeAreaBackground>
+    <SafeAreaBackground hasTopInsets>
       <ScreenHeader title={title} />
       <ScrollView>
         <List.Section>
@@ -176,4 +185,58 @@ export default function More() {
       </ScrollView>
     </SafeAreaBackground>
   );
-};
+}
+
+const themedStyles = styleSheetFactory(palette => ({
+  root: {
+    flex: 1,
+    backgroundColor: palette.background.primary,
+    position: 'relative',
+  },
+  item: {
+    height: 52,
+    maxHeight: 52,
+    paddingHorizontal: spacing(5),
+    backgroundColor: palette.background.primary,
+  },
+  icon: {},
+  title: {
+    fontSize: 16,
+    lineHeight: 20,
+    letterSpacing: 0.2,
+    fontWeight: '700',
+    color: palette.text.primary,
+  },
+  disabledTitle: {
+    color: palette.text.disabled,
+  },
+  description: {
+    fontSize: 14,
+    lineHeight: 20,
+    letterSpacing: 0.2,
+    fontWeight: '400',
+    color: palette.text.placeholder,
+  },
+  subItem: {
+    height: 48,
+    maxHeight: 48,
+    paddingRight: spacing(),
+    paddingLeft: spacing(8),
+    backgroundColor: palette.background.primary,
+  },
+  subtitle: {
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '600',
+    letterSpacing: 0.2,
+    color: palette.text.primary,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: palette.border,
+  },
+  logout: {
+    marginBottom: 32,
+  },
+  logoutText: { fontSize: 16, fontWeight: '400' },
+}));

@@ -1,11 +1,10 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 
-import { HapticTab } from '~/components/haptic-tab';
-import { EIconSymbolName, IconSymbol } from '~/components/ui/icon-symbol';
+import { HapticTab } from '~/components/ui/haptic-tab';
 import { Colors } from '~/constants/theme';
 import { useColorScheme } from '~/hooks/use-color-scheme';
-import { t } from "i18next";
+import { t } from 'i18next';
 import { EMainTabs } from '~/types/INavigation';
 import HomeIcon from '~/assets/svg/mainTabs/home.svg';
 import HomeActiveIcon from '~/assets/svg/mainTabs/home-active.svg';
@@ -66,9 +65,6 @@ export default function TabLayout() {
     },
   ];
 
-  console.log('TEST_69 EIconSymbolName:' , EIconSymbolName);
-
-
   return (
     <Tabs
       screenOptions={{
@@ -77,7 +73,8 @@ export default function TabLayout() {
         tabBarInactiveTintColor: '#8e8e93',
         headerShown: false,
         tabBarButton: HapticTab, // temporarily disable to rule out any interference
-      }}>
+      }}
+    >
       {MAIN_TABS.map(({ name, Icon, ActiveIcon, title }) => (
         <Tabs.Screen
           key={name}
@@ -94,6 +91,5 @@ export default function TabLayout() {
         />
       ))}
     </Tabs>
-
   );
 }

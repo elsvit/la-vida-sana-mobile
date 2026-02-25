@@ -47,14 +47,22 @@ const cartPersistConfig: PersistConfig<IStateCart> = {
 };
 
 // Combine reducers
+const accountReducer = IS_WEB
+  ? accountSlice.reducer
+  : persistReducer<IStateAccount>(accountPersistConfig, accountSlice.reducer);
+
+const cartReducer = IS_WEB
+  ? cartSlice.reducer
+  : persistReducer<IStateCart>(cartPersistConfig, cartSlice.reducer);
+
 const rootReducer = combineReducers({
   [EStateName.common]: commonSlice.reducer,
-  [EStateName.account]: IS_WEB ? accountSlice.reducer : persistReducer<IStateAccount>(accountPersistConfig, accountSlice.reducer),
+  [EStateName.account]: accountReducer,
   [EStateName.dishes]: dishesSlice.reducer,
   [EStateName.products]: productsSlice.reducer,
   [EStateName.genericProducts]: genericProductsSlice.reducer,
   [EStateName.users]: usersSlice.reducer,
-  [EStateName.cart]: IS_WEB ? cartSlice.reducer : persistReducer<IStateCart>(cartPersistConfig, cartSlice.reducer),
+  [EStateName.cart]: cartReducer,
 });
 
 // Saga middleware

@@ -1,13 +1,17 @@
 // import { createSelector } from 'reselect';
-import { RootStateT } from '../store';
+import { RootStateT, EStateName } from '~/store';
 // import { usersAdapter } from './slice';
+import { IStateAccount } from '~/store/account/types';
 
 // Base selectors
-export const getAccountState = (state: RootStateT) => state.account;
+export const getAccountState = (state: RootStateT) => state[EStateName.account];
 
 // Simple selectors
-export const selectLang = (state: RootStateT) => state.account.lang;
-export const selectRole = (state: RootStateT) => state.account.role;
+// export const selectLang = (state: RootStateT) => state[EStateName.account].lang;
+
+export const selectLang = (state: RootStateT) =>
+  (state[EStateName.account] as Persisted<IStateAccount>).lang;
+export const selectRole = (state: RootStateT) => (state[EStateName.account] as Persisted<IStateAccount>).role;
 
 // Adapter selectors
 // export const {
@@ -46,4 +50,4 @@ export const selectRole = (state: RootStateT) => state.account.role;
 //   );
 
 export const selectIsLangInitiating = (state: RootStateT) =>
-  state.account.isLangInitiating;
+  (state[EStateName.account] as Persisted<IStateAccount>).isLangInitiating;

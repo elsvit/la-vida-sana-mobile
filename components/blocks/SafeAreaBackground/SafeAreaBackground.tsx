@@ -13,7 +13,7 @@ export const SafeAreaBackground: React.FC<ISafeAreaBackground> = ({
   bgImg,
   bgColor,
   statusBarContent = StatusBarContent.DEFAULT,
-  hasTopInsets = true,
+  hasTopInsets = false,
 }) => {
   const insets = useSafeAreaInsets();
 

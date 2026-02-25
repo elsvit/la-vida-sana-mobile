@@ -1,111 +1,94 @@
-import { ScreenHeader } from '~/components/blocks/ScreenHeader';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { SafeAreaBackground } from '~/components/blocks/SafeAreaBackground';
-import { t } from '~/services/localization/localization';
-// import { ActivityIndicator, IconButton } from 'react-native-paper';
 import { useStyle } from '~/styles';
-import { themedStyles } from './styles';
-import { ScrollView, Text, TouchableOpacity, View, } from 'react-native';
-// import { IDish } from '~/types/IDish';
-import { Space } from '~/components/ui/Space';
+import themedStyles from './styles';
 import { ESeller } from '~/types/IProduct';
-import { ProductList } from '~/components/products/ProductList';
-// import { Divider } from 'react-native-paper';
-import MercadonaIcon from '~/assets/svg/sellers/mercadona.svg';
-import CarrefourIcon from '~/assets/svg/sellers/carrefour.svg';
-import SupermarketIcon from '~/assets/svg/mainTabs/shopping-active.svg';
-import ChevronDownIcon from '~/assets/svg/common/chevron-down.svg';
-import ChevronUpIcon from '~/assets/svg/common/chevron-up.svg';
+import { useI18nHeaderTitle } from '~/hooks/useI18nHeaderTitle';
+import { GenericProductList } from '~/components/genericProducts/GenericProductList';
+import { useSelector } from 'react-redux';
+import { selectAllGenericProductCategories, selectGenericProductById } from '~/store/genericProducts/selectors';
+import { selectLang } from '~/store/account';
+import { ELang } from '~/types/ILang';
+import { Search } from '~/components/ui/Search/Search';
+import { router } from 'expo-router';
 
 export default function Products() {
   const [styles] = useStyle(themedStyles);
-  const title = t('products.products');
 
-  // State to track which sellers are visible
-  const [visibleSellers, setVisibleSellers] = useState<Set<ESeller>>(
-    // new Set([ESeller.MERCADONA, ESeller.CARREFOUR]), // All sellers visible by default
-    new Set(), // All sellers visible by default
-  );
+  const lang = useSelector(selectLang);
+  const categories = useSelector(selectAllGenericProductCategories);
 
-  const sellers: ESeller[] = [ESeller.MERCADONA, ESeller.CARREFOUR];
+  useI18nHeaderTitle('products.products');
 
-  const toggleSellerVisibility = (seller: ESeller) => {
-    const newVisibleSellers = new Set(visibleSellers);
-    if (newVisibleSellers.has(seller)) {
-      newVisibleSellers.delete(seller);
-    } else {
-      newVisibleSellers.add(seller);
-    }
-    setVisibleSellers(newVisibleSellers);
-  };
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const isSellerVisible = (seller: ESeller) => visibleSellers.has(seller);
+  // 🔎 Filtered + Sorted Categories
+  const filteredCategories = useMemo(() => {
+    if (!categories) return [];
 
-  const getSellerDisplayName = (seller: ESeller): string => {
-    switch (seller) {
-      case ESeller.MERCADONA:
-        return t('sellers.mercadona');
-      case ESeller.CARREFOUR:
-        return t('sellers.carrefour');
-      default:
-        return seller;
-    }
-  };
+    const query = searchQuery.trim().toLowerCase();
 
-  const getSellerIcon = (seller: ESeller) => {
-    switch (seller) {
-      case ESeller.MERCADONA:
-        return MercadonaIcon;
-      case ESeller.CARREFOUR:
-        return CarrefourIcon;
-      default:
-        return SupermarketIcon;
-    }
+    const sorted = [...categories].sort((a, b) => {
+      const aName =
+        lang === ELang.en
+          ? (a.nameEn || a.name || '').toLowerCase()
+          : (a.name || '').toLowerCase();
+
+      const bName =
+        lang === ELang.en
+          ? (b.nameEn || b.name || '').toLowerCase()
+          : (b.name || '').toLowerCase();
+
+      return aName.localeCompare(bName);
+    });
+
+    if (!query) return sorted;
+
+    // filter products inside categories
+    return sorted
+      .map(category => {
+        const filteredIds =
+          category.genericProductIds?.filter(id => {
+            const product = selectGenericProductById(
+              (window as any).__store?.getState(),
+              id,
+            );
+
+            if (!product) return false;
+
+            const name = product.name?.toLowerCase() || '';
+            const nameEn = product.nameEn?.toLowerCase() || '';
+
+            return name.includes(query) || nameEn.includes(query);
+          }) || [];
+
+        return {
+          ...category,
+          genericProductIds: filteredIds,
+        };
+      })
+      .filter(category => category.genericProductIds?.length);
+  }, [categories, searchQuery, lang]);
+
+  const handleProductPress = (id: string) => {
+    if (!id) return;
+
+    router.push({
+      pathname: '/products/Product/Product',
+      params: { id },
+    });
   };
 
   return (
     <SafeAreaBackground>
-      <ScreenHeader title={title} hasBackButton />
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {sellers.map(seller => (
-          <View key={seller}>
-            {/* Seller Header */}
-            <View style={styles.sellerHeader}>
-              <View style={styles.sellerHeaderContent}>
-                {React.createElement(getSellerIcon(seller), {
-                  width: 24,
-                  height: 24,
-                })}
-                <Text style={styles.sellerTitle}>
-                  {getSellerDisplayName(seller)}
-                </Text>
-                <View style={styles.sellerHeaderActions}>
-                  <TouchableOpacity
-                    onPress={() => toggleSellerVisibility(seller)}
-                    style={styles.toggleButton}
-                  >
-                    {isSellerVisible(seller) ? (
-                      <ChevronUpIcon width={20} height={20} />
-                    ) : (
-                      <ChevronDownIcon width={20} height={20} />
-                    )}
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
+      {/* 🔎 SEARCH */}
+      <Search onChange={setSearchQuery} />
 
-            {/* Seller Products List - Only render if visible */}
-            {isSellerVisible(seller) && (
-              <View style={styles.sellerProductsContainer}>
-                <ProductList seller={seller} />
-              </View>
-            )}
-          </View>
-        ))}
-
-        {/* Bottom spacing */}
-        <Space size={4} />
-      </ScrollView>
+      {/* 📦 PRODUCT LIST */}
+      <GenericProductList
+        categories={filteredCategories}
+        onProductPress={handleProductPress}
+      />
     </SafeAreaBackground>
   );
-};
+}
