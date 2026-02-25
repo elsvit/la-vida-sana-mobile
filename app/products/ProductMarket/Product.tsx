@@ -4,23 +4,29 @@ import { t } from '~/services/localization/localization';
 import { Avatar, Card, Chip, Text } from 'react-native-paper';
 import { Image, ScrollView, View } from 'react-native';
 import { useStyle } from '~/styles';
-import { themedStyles } from './styles';
+import themedStyles from './styles';
 import { Space } from '~/components/ui/Space';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { EScreens, ScreenRoutesParams } from '~/types/INavigation';
 import { useSelector } from 'react-redux';
 import { RootStateT } from '~/store';
 import { selectById } from '~/store/products/selectors';
-import { IProduct } from '~/types/IProduct';
+import { ESeller, IProduct } from '~/types/IProduct';
 import React from 'react';
+import { IGenericProduct } from '~/types/IGenericProduct';
+import { selectGenericProductById } from '~/store/genericProducts/selectors';
 
-export default function ProductScreen() {
+export interface IProductScreenProps {
+  genericProductId: string;
+}
+
+export default function Product() {
   const [styles] = useStyle(themedStyles);
-  const { productId, seller } =
+  const { id } =
     useRoute<RouteProp<ScreenRoutesParams, EScreens.Product>>().params;
 
-  const product: IProduct | undefined = useSelector((state: RootStateT) =>
-    selectById(seller, productId)(state),
+  const product = useSelector((state: any) =>
+    selectGenericProductById(state, id),
   );
 
   const title = t('products.product');

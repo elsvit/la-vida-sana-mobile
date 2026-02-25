@@ -14,7 +14,7 @@ const initialState: IStateCommon = {
 };
 
 export const commonSlice = createSlice({
-  name: EStateName.dishes,
+  name: EStateName.common,
   initialState,
   reducers: {
     setLoading: (state, action: PayloadAction<IActionTypePayload>) => {

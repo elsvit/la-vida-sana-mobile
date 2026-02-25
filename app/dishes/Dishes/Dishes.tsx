@@ -10,11 +10,13 @@ import { FlatList, View, Text } from 'react-native';
 // import { IDish } from '~/types/IDish';
 import { DishListItem } from '~/components/dishes/DishesListItem';
 import { Space } from '~/components/ui/Space';
+import { useI18nHeaderTitle } from '~/hooks/useI18nHeaderTitle';
 
-export const Dishes = () => {
+export default function Dishes() {
   const [styles] = useStyle(themedStyles);
   const { dishesIds, isLoading, isLoaded, fetchDishesData } = useGetDishes();
-  const title = t('dishes.dishes');
+  useI18nHeaderTitle('dishes.dishes');
+
   useEffect(() => {
     if (!isLoading && !isLoaded) {
       fetchDishesData();
@@ -41,7 +43,6 @@ export const Dishes = () => {
 
   return (
     <SafeAreaBackground>
-      <ScreenHeader title={title} hasBackButton />
       <FlatList
         keyExtractor={item => item.toLowerCase()}
         data={dishesIds}

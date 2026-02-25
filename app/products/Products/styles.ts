@@ -61,3 +61,5 @@ export const themedStyles = styleSheetFactory(palette => ({
     height: 1,
   },
 }));
+
+export default themedStyles;

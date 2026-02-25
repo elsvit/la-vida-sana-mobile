@@ -5,3 +5,5 @@ export const themedStyles = styleSheetFactory(palette => ({
     flex: 1,
   },
 }));
+
+export default themedStyles;

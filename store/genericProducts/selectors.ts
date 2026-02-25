@@ -1,4 +1,4 @@
-import { RootStateT } from '../store';
+import { RootStateT } from '~/store';
 import { genericProductsAdapter } from './slice';
 
 // Base selectors
@@ -15,3 +15,6 @@ export const {
 } = genericProductsAdapter.getSelectors(
   (state: RootStateT) => state.genericProducts,
 );
+
+export const selectAllGenericProductCategories = (state: RootStateT) =>
+  state.genericProducts.categories;

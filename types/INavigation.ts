@@ -3,11 +3,11 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ESeller } from './IProduct';
 
 export enum EMainTabs {
-  Home = 'Home/Home',
-  Menu = 'Menu/Menu',
-  Storage = 'Storage/Storage',
-  Shopping = 'Shopping/Shopping',
-  More = 'More/More',
+  Home = 'Home',
+  Menu = 'Menu',
+  Storage = 'Storage',
+  Shopping = 'Shopping',
+  More = 'More',
 }
 
 export enum EScreens {
@@ -34,7 +34,8 @@ export type ScreenRoutesParams = {
   // [EScreens.UserAdd]: undefined;
   // [EScreens.UserEdit]: { userId: string };
   [EScreens.Products]: { seller: ESeller };
-  [EScreens.Product]: { productId: string; seller: ESeller };
+  [EScreens.Product]: { id: string; seller: ESeller };
+  // [EScreens.Product]: { productId: string; seller: ESeller };
   [EScreens.Dishes]: undefined;
   [EScreens.Dish]: { dishId: string };
 };

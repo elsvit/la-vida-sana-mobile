@@ -6,7 +6,7 @@ export default function Home() {
   const title = t('home.title');
 
   return (
-    <SafeAreaBackground>
+    <SafeAreaBackground hasTopInsets>
       <ScreenHeader title={title} />
     </SafeAreaBackground>
   );

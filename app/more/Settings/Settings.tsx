@@ -8,7 +8,7 @@ import { SafeAreaBackground } from '~/components/blocks/SafeAreaBackground';
 import { setLanguage } from '~/store/account/slice';
 import { selectLang } from '~/store/account/selectors';
 import { ELang } from '~/types/ILang';
-import { themedStyles } from './styles';
+import themedStyles from './styles';
 import { palette, useStyle } from '~/styles';
 import CheckIcon from '~/assets/svg/common/check.svg';
 import { useNavigation } from 'expo-router';
@@ -43,7 +43,7 @@ export default function Settings() {
   ];
 
   return (
-    <SafeAreaBackground bgColor={palette.background.primary} hasTopInsets={false}>
+    <SafeAreaBackground bgColor={palette.background.primary}>
       {/*<ScreenHeader*/}
       {/*  title={title}*/}
       {/*  hasBackButton*/}

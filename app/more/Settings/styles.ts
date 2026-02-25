@@ -32,3 +32,5 @@ export const themedStyles = styleSheetFactory(palette => ({
     marginTop: spacing(4),
   },
 }));
+
+export default themedStyles;
