@@ -1,4 +1,5 @@
 import { ESeller } from './IProduct';
+import { EAllergen, EMineral, EVitamin } from '~/types/IElement';
 
 export enum EGenericSeller {
   GENERIC_PRODUCTS = 'genericProducts',
@@ -24,6 +25,25 @@ export interface IGenericProduct {
   image?: string;
   thumbnail?: string;
   matchingProducts?: IGenericMatchingProduct[]; // Change back to the correct type
+  calories?: number | null; // per 100g or 100ml
+  protein?: number | null; // per 100g or 100ml
+  fat?: number | null;
+  carbohydrates?: number | null;
+  salt?: number | null;
+  sugar?: number | null;
+  fiber?: number | null;
+  saturatedFat?: number | null;
+  monounsaturatedFat?: number | null;
+  polyunsaturatedFat?: number | null;
+  cholesterol?: number | null;
+  sodium?: number | null;
+  vitamins?: EVitamin[] | null;
+  minerals?: EMineral[] | null;
+  nutriScore?: string | null;
+  totalDissolvedSolids?: number | null;
+  allergens?: EAllergen[] | null;
+  storageConditions?: string | null;
+  rate?: number | null;
 }
 
 export interface IGenericProductCategory {

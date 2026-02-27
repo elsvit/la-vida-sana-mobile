@@ -48,3 +48,9 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+build:
+eas build:configure to create a build profile for your app eas.json.
+
+eas secret:create --name EXPO_PUBLIC_SUPABASE_URL --value "https://apvtgmki.supabase.co"
+eas secret:create --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value "your_anon_key_here"

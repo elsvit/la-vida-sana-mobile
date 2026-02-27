@@ -112,7 +112,7 @@
       "late_night": "Noche",
       "lunch": "Almuerzo",
       "dinner": "Cena",
-      "snacks": "Snacks",
+      "snacks": "Bocadillos",
       "other": "Otro"
     },
     "EPreparationMethod": {
@@ -142,6 +142,7 @@
     "brand": "Marca",
     "calories": "Calorías",
     "carbohydrates": "Carbohidratos",
+    "cholesterol": "Colesterol",
     "fat": "Grasa",
     "fiber": "Fibra",
     "image": "Imagen",
@@ -149,6 +150,7 @@
     "minerals": "Minerales",
     "monounsaturated_fat": "Grasa Monoinsaturada",
     "nutritional_information": "Información Nutricional",
+    "nutri_score": "Puntuación Nutri",
     "packaging": "Empaquetado",
     "polyunsaturated_fat": "Grasa Poliinsaturada",
     "price": "Precio",
@@ -164,8 +166,10 @@
     "size": "Tamaño",
     "size_format": "Formato de Tamaño",
     "sodium": "Sodio",
+    "storage_conditions": "Condiciones de Almacenamiento",
     "sugar": "Azúcar",
     "thumbnail": "Miniatura",
+    "total_dissolved_solids": "Total de Sólidos Disueltos",
     "ud_size": "Tamaño Unitario",
     "ud_size_format": "Formato de Tamaño Unitario",
     "vitamins": "Vitaminas"

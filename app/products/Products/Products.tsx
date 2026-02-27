@@ -1,16 +1,21 @@
 import React, { useMemo, useState } from 'react';
-import { SafeAreaBackground } from '~/components/blocks/SafeAreaBackground';
-import { useStyle } from '~/styles';
-import themedStyles from './styles';
-import { ESeller } from '~/types/IProduct';
-import { useI18nHeaderTitle } from '~/hooks/useI18nHeaderTitle';
-import { GenericProductList } from '~/components/genericProducts/GenericProductList';
-import { useSelector } from 'react-redux';
-import { selectAllGenericProductCategories, selectGenericProductById } from '~/store/genericProducts/selectors';
-import { selectLang } from '~/store/account';
-import { ELang } from '~/types/ILang';
-import { Search } from '~/components/ui/Search/Search';
+
 import { router } from 'expo-router';
+import { useSelector } from 'react-redux';
+
+import { SafeAreaBackground } from '~/components/blocks/SafeAreaBackground';
+import { GenericProductList } from '~/components/genericProducts/GenericProductList';
+import { Search } from '~/components/ui/Search/Search';
+import { useI18nHeaderTitle } from '~/hooks/useI18nHeaderTitle';
+import { selectLang } from '~/store/account';
+import {
+  selectAllGenericProductCategories,
+  selectGenericProductById,
+} from '~/store/genericProducts/selectors';
+import { useStyle } from '~/styles';
+import { ELang } from '~/types/ILang';
+
+import themedStyles from './styles';
 
 export default function Products() {
   const [styles] = useStyle(themedStyles);
