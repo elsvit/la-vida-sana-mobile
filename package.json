@@ -8,6 +8,11 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
+    "build-dev": "eas build -p android --profile development",
+    "build-preview-apk": "eas build -p android --profile preview",
+    "build-production-apk": "eas build -p android --profile production",
+    "prebuild": "npx expo prebuild",
+    "android:debug": "cd android && ./gradlew assembleDebug",
     "lint": "expo lint"
   },
   "dependencies": {
@@ -54,10 +59,13 @@
     "reselect": "^5.1.1"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/react": "~19.1.0",
     "@types/redux-logger": "^3.0.13",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
     "prettier": "^3.8.1",
     "react-native-svg-transformer": "^1.5.3",
     "redux-devtools-extension": "^2.13.9",

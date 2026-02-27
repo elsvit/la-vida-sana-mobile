@@ -1,21 +1,22 @@
-import { Tabs } from 'expo-router';
 import React from 'react';
 
+import { Tabs } from 'expo-router';
+import { t } from 'i18next';
+
+import HomeActiveIcon from '~/assets/svg/mainTabs/home-active.svg';
+import HomeIcon from '~/assets/svg/mainTabs/home.svg';
+import MenuActiveIcon from '~/assets/svg/mainTabs/menu-active.svg';
+import MenuIcon from '~/assets/svg/mainTabs/menu.svg';
+import MoreActiveIcon from '~/assets/svg/mainTabs/more-active.svg';
+import MoreIcon from '~/assets/svg/mainTabs/more.svg';
+import ShoppingActiveIcon from '~/assets/svg/mainTabs/shopping-active.svg';
+import ShoppingIcon from '~/assets/svg/mainTabs/shopping.svg';
+import StorageActiveIcon from '~/assets/svg/mainTabs/storage-active.svg';
+import StorageIcon from '~/assets/svg/mainTabs/storage.svg';
 import { HapticTab } from '~/components/ui/haptic-tab';
 import { Colors } from '~/constants/theme';
 import { useColorScheme } from '~/hooks/use-color-scheme';
-import { t } from 'i18next';
 import { EMainTabs } from '~/types/INavigation';
-import HomeIcon from '~/assets/svg/mainTabs/home.svg';
-import HomeActiveIcon from '~/assets/svg/mainTabs/home-active.svg';
-import MenuIcon from '~/assets/svg/mainTabs/menu.svg';
-import MenuActiveIcon from '~/assets/svg/mainTabs/menu-active.svg';
-import MoreIcon from '~/assets/svg/mainTabs/more.svg';
-import MoreActiveIcon from '~/assets/svg/mainTabs/more-active.svg';
-import ShoppingIcon from '~/assets/svg/mainTabs/shopping.svg';
-import ShoppingActiveIcon from '~/assets/svg/mainTabs/shopping-active.svg';
-import StorageIcon from '~/assets/svg/mainTabs/storage.svg';
-import StorageActiveIcon from '~/assets/svg/mainTabs/storage-active.svg';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();

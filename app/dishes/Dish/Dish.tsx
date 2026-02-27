@@ -1,18 +1,21 @@
 import React from 'react';
 import { Image, ScrollView, View } from 'react-native';
-import { Avatar, Chip, Text } from 'react-native-paper';
-import { SafeAreaBackground } from '~/components/blocks/SafeAreaBackground';
-import { useStyle } from '~/styles';
-import themedStyles from './styles';
+
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { EScreens, ScreenRoutesParams } from '~/types/INavigation';
+import { Avatar, Chip, Text } from 'react-native-paper';
 import { useSelector } from 'react-redux';
-import { selectDishById } from '~/store/dishes/selectors';
-import { selectLang } from '~/store/account';
-import { ELang } from '~/types/ILang';
+
+import { SafeAreaBackground } from '~/components/blocks/SafeAreaBackground';
+import { Space } from '~/components/ui/Space';
 import { useI18nHeaderTitle } from '~/hooks/useI18nHeaderTitle';
 import { t } from '~/services/localization/localization';
-import { Space } from '~/components/ui/Space';
+import { selectLang } from '~/store/account';
+import { selectDishById } from '~/store/dishes/selectors';
+import { useStyle } from '~/styles';
+import { ELang } from '~/types/ILang';
+import { EScreens, ScreenRoutesParams } from '~/types/INavigation';
+
+import { themedStyles } from './styles';
 
 export default function Dish() {
   const [styles] = useStyle(themedStyles);
@@ -79,12 +82,11 @@ export default function Dish() {
             {name}
           </Text>
 
-          {dish.rating && <Text variant="bodyMedium">⭐ {dish.rating}/5</Text>}
+          {dish.rating != null && <Text variant="bodyMedium">⭐ {dish.rating}/5</Text>}
         </View>
 
         {/* Image */}
         <View style={styles.imageContainer}>{renderImage()}</View>
-
         <Space size={16} />
 
         {/* Tags */}
@@ -92,7 +94,7 @@ export default function Dish() {
           <View style={styles.tagsContainer}>
             {dish.tags.map(tag => (
               <Chip key={tag} style={styles.chip}>
-                {tag}
+                <Text>{tag}</Text>
               </Chip>
             ))}
           </View>
