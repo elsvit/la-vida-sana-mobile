@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, TextInput, Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+
+import CrossIcon from '~/assets/svg/common/cross-circle.svg';
 // import { useStyle } from '~/styles';
 // import themedStyles from './styles';
 
 import SearchIcon from '~/assets/svg/common/search.svg';
-import CrossIcon from '~/assets/svg/common/cross-circle.svg';
 
 export const Search = ({ onChange }: { onChange: (v: string) => void }) => {
   // const [styles] = useStyle(themedStyles);
