@@ -9,6 +9,7 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "build-dev": "eas build -p android --profile development",
+    "build-dev-ios": "eas build -p ios --profile development",
     "build-preview-apk": "eas build -p android --profile preview",
     "build-production-apk": "eas build -p android --profile production",
     "prebuild": "npx expo prebuild",
@@ -42,6 +43,7 @@
     "i18next": "^25.8.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-hook-form": "^7.71.2",
     "react-native": "0.81.5",
     "react-native-config": "^1.6.1",
     "react-native-gesture-handler": "~2.28.0",
@@ -56,7 +58,8 @@
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.4.2",
-    "reselect": "^5.1.1"
+    "reselect": "^5.1.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
@@ -73,5 +76,10 @@
     "remote-redux-devtools": "^0.5.16",
     "typescript": "~5.9.2"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "router": {
+      "appDir": "src/app"
+    }
+  }
 }
