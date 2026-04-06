@@ -27,12 +27,49 @@ import {
   IUser,
   UserFormProps,
 } from '~/types/IUser';
+import { useForm, Controller } from 'react-hook-form';
+import { z } from 'zod';
 
 type Props = {
   mode: EFormMode;
   user?: IUser;
   onSave?: (user: UserFormProps) => void;
 };
+
+type FormValues = {
+  name: string;
+  birthYear: string; // keep as string in UI; zod will coerce to number
+  sex?: ESex;
+  weight: string; // keep as string in UI; zod will coerce to number
+  height: string; // keep as string in UI; zod will coerce to number
+  activityLevel?: EActivityLevel;
+  goal?: EGoal;
+};
+
+const schema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(1, t('common.required') || 'Required'),
+  birthYear: z.coerce
+    .number()
+    .finite({ message: t('common.required') || 'Required' }),
+  sex: z.nativeEnum(ESex, {
+    error: t('common.required') || 'Required',
+  }),
+  weight: z.coerce
+    .number()
+    .finite({ message: t('common.required') || 'Required' }),
+  height: z.coerce
+    .number()
+    .finite({ message: t('common.required') || 'Required' }),
+  activityLevel: z.nativeEnum(EActivityLevel, {
+    error: t('common.required') || 'Required',
+  }),
+  goal: z.nativeEnum(EGoal, {
+    error: t('common.required') || 'Required',
+  }),
+});
 
 export const UserForm: React.FC<Props> = ({ mode, user, onSave }) => {
   useI18nHeaderTitle(
@@ -41,18 +78,7 @@ export const UserForm: React.FC<Props> = ({ mode, user, onSave }) => {
 
   const allSellersOptions = useGetAllSellersOptions();
 
-  const [name, setName] = React.useState(user?.name ?? '');
   const [lastName, setLastName] = React.useState(user?.lastName ?? '');
-  const [birthYear, setBirthYear] = React.useState(
-    user?.birthYear?.toString() ?? '',
-  );
-  const [sex, setSex] = React.useState<ESex | undefined>(user?.sex);
-  const [weight, setWeight] = React.useState(user?.weight?.toString() ?? '');
-  const [height, setHeight] = React.useState(user?.height?.toString() ?? '');
-  const [activityLevel, setActivityLevel] = React.useState<
-    EActivityLevel | undefined
-  >(user?.activityLevel);
-  const [goal, setGoal] = React.useState<EGoal | undefined>(user?.goal);
   const [goalApproach, setWeeklyGoalApproach] = React.useState<
     EWeeklyGoalApproach | undefined
   >(user?.goalApproach);
@@ -76,6 +102,26 @@ export const UserForm: React.FC<Props> = ({ mode, user, onSave }) => {
   );
 
   const categoriesSelectListData = useGenericProductsSelectListData();
+
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { errors },
+    getValues,
+  } = useForm<FormValues>({
+    defaultValues: {
+      name: user?.name ?? '',
+      birthYear: user?.birthYear?.toString() ?? '',
+      sex: user?.sex,
+      weight: user?.weight?.toString() ?? '',
+      height: user?.height?.toString() ?? '',
+      activityLevel: user?.activityLevel ?? EActivityLevel.SedentaryActive,
+      goal: user?.goal ?? EGoal.MaintainWeight,
+    },
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+  });
 
   const ACTIVITY_LEVEL_OPTIONS = [
     {
@@ -157,20 +203,29 @@ export const UserForm: React.FC<Props> = ({ mode, user, onSave }) => {
     setSelectedSellers(selected);
   };
 
-  const handleSave = () => {
-    if (!name.trim()) return;
+  const onSubmit = (raw: FormValues) => {
+    // Validate with zod
+    const parsed = schema.safeParse(raw);
+    if (!parsed.success) {
+      for (const issue of parsed.error.issues) {
+        const field = issue.path[0] as keyof FormValues | undefined;
+        if (field) {
+          setError(field, { type: 'manual', message: issue.message });
+        }
+      }
+      return;
+    }
+
+    const d = parsed.data;
     const newUser: UserFormProps = {
-      // id: user?.id ?? '',
-      // createdAt: user?.createdAt ?? '',
-      // updatedAt: user?.updatedAt ?? '',
-      name,
+      name: d.name,
       lastName,
-      birthYear: Number(birthYear),
-      sex,
-      weight: Number(weight),
-      height: Number(height),
-      activityLevel,
-      goal,
+      birthYear: d.birthYear,
+      sex: d.sex,
+      weight: d.weight,
+      height: d.height,
+      activityLevel: d.activityLevel,
+      goal: d.goal,
       goalApproach,
       numberOfMeals,
       weeklyBudget,
@@ -190,11 +245,24 @@ export const UserForm: React.FC<Props> = ({ mode, user, onSave }) => {
             {/* 0) Name, LastName */}
             <View style={styles.row}>
               <View style={styles.firstInRow}>
-                <TextInput
-                  label={t('users.name') || 'Name'}
-                  value={name}
-                  onChangeText={setName}
-                  mode="outlined"
+                <Controller
+                  control={control}
+                  name="name"
+                  render={({ field: { value, onChange } }) => (
+                    <>
+                      <TextInput
+                        label={t('users.name') || 'Name'}
+                        value={value}
+                        onChangeText={onChange}
+                        mode="outlined"
+                      />
+                      {!!errors.name && (
+                        <Text style={{ color: 'red', marginTop: 4 }}>
+                          {errors.name.message || (t('common.required') || 'Required')}
+                        </Text>
+                      )}
+                    </>
+                  )}
                 />
               </View>
               <View style={styles.secondInRow}>
@@ -211,20 +279,46 @@ export const UserForm: React.FC<Props> = ({ mode, user, onSave }) => {
             {/* 1) BirthYear, Sex */}
             <View style={styles.row}>
               <View style={styles.firstInRow}>
-                <TextInput
-                  label={t('users.birth_year') || 'Birth Year'}
-                  value={birthYear}
-                  onChangeText={setBirthYear}
-                  mode="outlined"
-                  keyboardType="number-pad"
+                <Controller
+                  control={control}
+                  name="birthYear"
+                  render={({ field: { value, onChange } }) => (
+                    <>
+                      <TextInput
+                        label={t('users.birth_year') || 'Birth Year'}
+                        value={value}
+                        onChangeText={onChange}
+                        mode="outlined"
+                        keyboardType="number-pad"
+                      />
+                      {!!errors.birthYear && (
+                        <Text style={{ color: 'red', marginTop: 4 }}>
+                          {errors.birthYear.message || (t('common.required') || 'Required')}
+                        </Text>
+                      )}
+                    </>
+                  )}
                 />
               </View>
               <View style={styles.secondInRow}>
-                <Select
-                  label={t('users.sex') || 'Sex'}
-                  value={sex ?? SEX_OPTIONS[0].value}
-                  onChange={v => setSex(v as ESex)}
-                  options={SEX_OPTIONS}
+                <Controller
+                  control={control}
+                  name="sex"
+                  render={({ field: { value, onChange } }) => (
+                    <>
+                      <Select
+                        label={t('users.sex') || 'Sex'}
+                        value={value}
+                        onChange={v => onChange(v as ESex)}
+                        options={SEX_OPTIONS}
+                      />
+                      {!!errors.sex && (
+                        <Text style={{ color: 'red', marginTop: 4 }}>
+                          {errors.sex.message || (t('common.required') || 'Required')}
+                        </Text>
+                      )}
+                    </>
+                  )}
                 />
               </View>
             </View>
@@ -233,21 +327,47 @@ export const UserForm: React.FC<Props> = ({ mode, user, onSave }) => {
             {/* 2) Weight, Height */}
             <View style={styles.row}>
               <View style={styles.firstInRow}>
-                <TextInput
-                  label={`${t('users.weight')} (${t('sizes.kg')})`}
-                  value={weight}
-                  onChangeText={setWeight}
-                  mode="outlined"
-                  keyboardType="decimal-pad"
+                <Controller
+                  control={control}
+                  name="weight"
+                  render={({ field: { value, onChange } }) => (
+                    <>
+                      <TextInput
+                        label={`${t('users.weight')} (${t('sizes.kg')})`}
+                        value={value}
+                        onChangeText={onChange}
+                        mode="outlined"
+                        keyboardType="decimal-pad"
+                      />
+                      {!!errors.weight && (
+                        <Text style={{ color: 'red', marginTop: 4 }}>
+                          {errors.weight.message || (t('common.required') || 'Required')}
+                        </Text>
+                      )}
+                    </>
+                  )}
                 />
               </View>
               <View style={styles.secondInRow}>
-                <TextInput
-                  label={`${t('users.height')} (${t('sizes.cm')})`}
-                  value={height}
-                  onChangeText={setHeight}
-                  mode="outlined"
-                  keyboardType="decimal-pad"
+                <Controller
+                  control={control}
+                  name="height"
+                  render={({ field: { value, onChange } }) => (
+                    <>
+                      <TextInput
+                        label={`${t('users.height')} (${t('sizes.cm')})`}
+                        value={value}
+                        onChangeText={onChange}
+                        mode="outlined"
+                        keyboardType="decimal-pad"
+                      />
+                      {!!errors.height && (
+                        <Text style={{ color: 'red', marginTop: 4 }}>
+                          {errors.height.message || (t('common.required') || 'Required')}
+                        </Text>
+                      )}
+                    </>
+                  )}
                 />
               </View>
             </View>
@@ -256,11 +376,24 @@ export const UserForm: React.FC<Props> = ({ mode, user, onSave }) => {
             {/* 3) Goal, GoalApproach */}
             <View style={styles.row}>
               <View style={styles.firstInRow}>
-                <Select
-                  label={t('users.goal') || 'Goal'}
-                  value={goal ?? GOAL_OPTIONS[0].value}
-                  onChange={v => setGoal(v as EGoal)}
-                  options={GOAL_OPTIONS}
+                <Controller
+                  control={control}
+                  name="goal"
+                  render={({ field: { value, onChange } }) => (
+                    <>
+                      <Select
+                        label={t('users.goal') || 'Goal'}
+                        value={value}
+                        onChange={v => onChange(v as EGoal)}
+                        options={GOAL_OPTIONS}
+                      />
+                      {!!errors.goal && (
+                        <Text style={{ color: 'red', marginTop: 4 }}>
+                          {errors.goal.message || (t('common.required') || 'Required')}
+                        </Text>
+                      )}
+                    </>
+                  )}
                 />
               </View>
               <View style={styles.secondInRow}>
@@ -279,11 +412,24 @@ export const UserForm: React.FC<Props> = ({ mode, user, onSave }) => {
             {/* 4) Activity level, Number of meals */}
             <View style={styles.row}>
               <View style={styles.firstInRow}>
-                <Select
-                  label={t('users.activity_level') || 'Activity level'}
-                  value={activityLevel ?? ACTIVITY_LEVEL_OPTIONS[1].value}
-                  onChange={v => setActivityLevel(v as EActivityLevel)}
-                  options={ACTIVITY_LEVEL_OPTIONS}
+                <Controller
+                  control={control}
+                  name="activityLevel"
+                  render={({ field: { value, onChange } }) => (
+                    <>
+                      <Select
+                        label={t('users.activity_level') || 'Activity level'}
+                        value={value}
+                        onChange={v => onChange(v as EActivityLevel)}
+                        options={ACTIVITY_LEVEL_OPTIONS}
+                      />
+                      {!!errors.activityLevel && (
+                        <Text style={{ color: 'red', marginTop: 4 }}>
+                          {errors.activityLevel.message || (t('common.required') || 'Required')}
+                        </Text>
+                      )}
+                    </>
+                  )}
                 />
               </View>
               <View style={styles.secondInRow}>
@@ -326,6 +472,7 @@ export const UserForm: React.FC<Props> = ({ mode, user, onSave }) => {
               <View style={styles.firstInRow}>
                 <SelectInSectionList
                   label={t('users.disliked_products') || 'Disliked Products'}
+                  value={dislikedProducts}
                   selectListData={categoriesSelectListData}
                   isMultiple
                   renderItem={(id: string) => (
@@ -343,6 +490,7 @@ export const UserForm: React.FC<Props> = ({ mode, user, onSave }) => {
               <View style={styles.firstInRow}>
                 <SelectInSectionList
                   label={t('users.favorite_products') || 'Favorite Products'}
+                  value={favoriteProducts}
                   selectListData={categoriesSelectListData}
                   isMultiple
                   renderItem={(id: string) => (
@@ -373,11 +521,7 @@ export const UserForm: React.FC<Props> = ({ mode, user, onSave }) => {
 
             <Space size={24} />
 
-            <Button
-              mode="contained"
-              onPress={handleSave}
-              disabled={!name.trim()}
-            >
+            <Button mode="contained" onPress={handleSubmit(onSubmit)}>
               {t('button.save') || 'Save'}
             </Button>
             <Space size={24} />

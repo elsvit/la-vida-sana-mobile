@@ -85,6 +85,10 @@ export default function RootStack() {
             name="users/UserEdit"
             options={minimalHeaderBackOptions}
           />
+          <Stack.Screen
+            name="users/UsersRemove"
+            options={minimalHeaderBackOptions}
+          />
         </Stack>
       </ThemeProvider>
     </PaperProvider>

@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IStateUsers } from './types';
+import { IStateUsers, RemoveUserPayload } from './types';
 import { IUser } from '~/types/IUser';
 import { EStateName } from '../types';
 import {
   createGenericEntityAdapter,
   createEntityReducers,
 } from '../helpers/entityAdapter';
+import { AddUserPayload, UpdateUserPayload } from './types';
 
 // Create entity adapter for dishes
 export const usersAdapter = createGenericEntityAdapter<IUser>();
@@ -21,14 +22,29 @@ export const usersSlice = createSlice({
   name: EStateName.users,
   initialState,
   reducers: {
-    addUser: (state, action) => {
+    addUser: (state, action: PayloadAction<AddUserPayload>) => {
       entityReducers.addEntity(state, action);
     },
-    updateUser: (state, action) => {
-      entityReducers.upsertEntity(state, action);
+    addUserSuccess: (state, action: PayloadAction<IUser>) => {
+      entityReducers.addEntity(state, {
+        ...action,
+        // entityReducers.addEntity expects payload in shape { entity: IUser }
+        payload: { entity: action.payload },
+      });
     },
-    removeUser: (state, action) => {
-      entityReducers.removeEntity(state, action);
+    updateUser: (state, action: PayloadAction<AddUserPayload>) => {
+      entityReducers.upsertEntity(state, { ...action, payload: action.payload.entity, });
+    },
+    updateUserSuccess: (state, action: PayloadAction<IUser>) => {
+      // entityReducers.upsertEntity expects payload to be the entity itself
+      entityReducers.upsertEntity(state, action as unknown as PayloadAction<IUser>);
+    },
+    removeUser: (state, action: PayloadAction<RemoveUserPayload>) => {
+      entityReducers.removeEntity(state, { ...action, payload: action.payload.entity, });
+    },
+    removeUserSuccess: (state, action: PayloadAction<string>) => {
+      // entityReducers.removeEntity expects payload to be the entity id (string)
+      entityReducers.removeEntity(state, action as unknown as PayloadAction<string>);
     },
     clearUsers: state => {
       entityReducers.clearEntities(state);
@@ -36,4 +52,12 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { addUser, updateUser, removeUser, clearUsers } = usersSlice.actions;
+export const {
+  addUser,
+  addUserSuccess,
+  updateUser,
+  updateUserSuccess,
+  removeUser,
+  removeUserSuccess,
+  clearUsers,
+} = usersSlice.actions;

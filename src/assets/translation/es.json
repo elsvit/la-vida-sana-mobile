@@ -10,6 +10,7 @@
     "no_data_found": "No se encontraron datos",
     "no_items": "No hay elementos",
     "rating": "Puntuación",
+    "required": "Requerido",
     "search": "Buscar",
     "step": "Paso",
     "stepIndicator": "Paso {{step}} de {{totalSteps}}",
@@ -136,6 +137,7 @@
   "more": {
     "title": "Más",
     "add_user": "Agregar Usuario",
+    "remove_all_users": "Eliminar Todos los Usuarios",
     "language": "Idioma",
     "settings": "Ajustes",
     "users": "Usuarios"

@@ -1,4 +1,4 @@
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import { SafeAreaBackground } from '~/components/blocks/SafeAreaBackground';
@@ -11,10 +11,12 @@ import { IUser, UserFormProps } from '~/types/IUser';
 export default function UserEdit() {
   useI18nHeaderTitle('users.edit_user');
   const dispatch = useDispatch();
+  const route = useRoute<RouteProp<Record<string, { userId: string }>, string>>();
+  const userId = route.params?.userId;
   const handleSave = (user: UserFormProps) => {
     const newUser: IUser = {
-      id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-      createdAt: new Date().toISOString(),
+      id: userId as string,
+      updatedAt: new Date().toISOString(),
       ...user,
     } as IUser;
 

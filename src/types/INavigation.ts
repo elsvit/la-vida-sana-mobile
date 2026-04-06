@@ -15,6 +15,7 @@ export enum EScreens {
   Settings = 'more/Settings/Settings',
   UserAdd = 'users/UserAdd',
   UserEdit = 'users/UserEdit',
+  UsersRemove = 'users/UsersRemove',
   Products = 'products/Products/Products',
   Product = 'products/Product/Product',
   Dishes = 'dishes/Dishes/Dishes',

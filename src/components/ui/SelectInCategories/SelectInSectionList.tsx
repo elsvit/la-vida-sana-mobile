@@ -6,11 +6,12 @@ import { INPUT_HEIGHT } from '~/constants/sizes';
 import { IStringOptions } from '~/types/ICommon';
 import { SectionListWithSearch } from '~/components/blocks/SectionListWithSearch/SectionListWithSearch';
 
-const MAX_SYMBOLS_IN_INPUT = 15;
+const MAX_SYMBOLS_IN_INPUT = 25;
 
 type SelectInCategoriesProps = {
   label?: string;
   isMultiple?: boolean;
+  value?: string[]; // optional controlled values
   selectListData: {
     title: string; // category name
     data: string[] | IStringOptions[]; // product id[] or {id: value, label: name}[]
@@ -22,6 +23,7 @@ type SelectInCategoriesProps = {
 export function SelectInSectionList({
   label,
   isMultiple,
+  value,
   selectListData,
   renderItem,
   onChange,
@@ -29,6 +31,18 @@ export function SelectInSectionList({
   const [visible, setVisible] = React.useState(false);
   const [selectedMany, setSelectedMany] = React.useState<string[]>([]);
   const [selectedOne, setSelectedOne] = React.useState<string | null>(null);
+
+  // Derive effective selection from controlled prop when provided
+  const effectiveSelectedMany = React.useMemo(() => {
+    if (isMultiple) return (value ?? selectedMany) as string[];
+    return [];
+  }, [isMultiple, value, selectedMany]);
+
+  const effectiveSelectedOne = React.useMemo(() => {
+    if (isMultiple) return null;
+    const v = Array.isArray(value) && value.length ? value[0] : selectedOne;
+    return v ?? null;
+  }, [isMultiple, value, selectedOne]);
 
   // Aggregate labels map across all sections for quick id->label lookup
   const labelsMap = React.useMemo(() => {
@@ -50,8 +64,8 @@ export function SelectInSectionList({
       str.length > max ? `${str.slice(0, max)}...` : str;
 
     if (isMultiple) {
-      if (!selectedMany.length) return '';
-      const labels = selectedMany.map(id => labelsMap[id] || id);
+      if (!effectiveSelectedMany.length) return '';
+      const labels = effectiveSelectedMany.map(id => labelsMap[id] || id);
 
       // Build comma-separated string until limit, then append rest count
       let result = '';
@@ -61,20 +75,22 @@ export function SelectInSectionList({
         if (candidate.length > MAX_SYMBOLS_IN_INPUT) {
           const rest = labels.length - i;
           if (!result) {
-            // Even first label doesn't fit fully — truncate it to max
-            return `${truncate(seg, MAX_SYMBOLS_IN_INPUT)} (+${rest - 1})`;
+            const restMinusOne = rest - 1;
+            const truncatedSeg = truncate(seg, MAX_SYMBOLS_IN_INPUT);
+            return restMinusOne ? `${truncatedSeg} (+${restMinusOne})` : truncatedSeg;
           }
-          return `${result}... (+${rest})`;
+          console.log('TEST_80', result, rest);
+          return rest ? `${result}... (+${rest})` : result;
         }
         result = candidate;
       }
       return result;
     }
 
-    if (!selectedOne) return '';
-    const label = labelsMap[selectedOne] || selectedOne;
+    if (!effectiveSelectedOne) return '';
+    const label = labelsMap[effectiveSelectedOne] || effectiveSelectedOne;
     return truncate(label, MAX_SYMBOLS_IN_INPUT);
-  }, [isMultiple, labelsMap, selectedMany, selectedOne]);
+  }, [isMultiple, labelsMap, effectiveSelectedMany, effectiveSelectedOne]);
 
   const handleChangeFromList = React.useCallback(
     (values: string[]) => {
@@ -126,6 +142,7 @@ export function SelectInSectionList({
           <SectionListWithSearch
             style={styles.list}
             isMultiple={isMultiple}
+            value={isMultiple ? effectiveSelectedMany : effectiveSelectedOne ? [effectiveSelectedOne] : []}
             data={selectListData}
             renderItem={renderItem}
             onChange={handleChangeFromList}

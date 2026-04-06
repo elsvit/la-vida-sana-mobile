@@ -14,6 +14,7 @@ type TNormalizedSection = {
 type Props = {
   style?: StyleProp<ViewStyle>;
   isMultiple?: boolean;
+  value?: string[]; // optional controlled selected values
   data: {
     title: string;
     data: string[] | IStringOptions[];
@@ -26,6 +27,7 @@ type Props = {
 export const SectionListWithSearch: React.FC<Props> = ({
   style,
   isMultiple,
+  value,
   data,
   renderItem,
   onChange,
@@ -70,19 +72,34 @@ export const SectionListWithSearch: React.FC<Props> = ({
   const [selectedMany, setSelectedMany] = React.useState<string[]>([]);
   const [selectedOne, setSelectedOne] = React.useState<string | null>(null);
 
+  // Derive effective selection from controlled prop when provided
+  const effectiveSelectedMany = React.useMemo(() => {
+    if (isMultiple) return (value ?? selectedMany) as string[];
+    return [];
+  }, [isMultiple, value, selectedMany]);
+
+  const effectiveSelectedOne = React.useMemo(() => {
+    if (isMultiple) return null;
+    const v = Array.isArray(value) && value.length ? value[0] : selectedOne;
+    return v ?? null;
+  }, [isMultiple, value, selectedOne]);
+
   const onToggleItem = React.useCallback(
     (value: string) => {
       if (isMultiple) {
-        const exists = selectedMany.includes(value);
-        const next = exists ? selectedMany.filter(v => v !== value) : [...selectedMany, value];
+        const base = effectiveSelectedMany;
+        const exists = base.includes(value);
+        const next = exists ? base.filter(v => v !== value) : [...base, value];
+        // Optimistically update internal state for instant UI
         setSelectedMany(next);
         onChange(next);
       } else {
+        // Optimistically update internal state for instant UI
         setSelectedOne(value);
         onChange([value]);
       }
     },
-    [isMultiple, onChange, selectedMany],
+    [isMultiple, onChange, effectiveSelectedMany],
   );
 
   // Search state
@@ -111,12 +128,17 @@ export const SectionListWithSearch: React.FC<Props> = ({
   }, [normalized, searchQuery]);
 
   const sections = React.useMemo(
-    () =>
-      (searchQuery ? effectiveNormalized : normalized).map(c => ({
+    () => {
+      const base = searchQuery ? effectiveNormalized : normalized;
+      return base.map(c => ({
         key: c.title,
         title: c.title,
+        // Visible items depend on search/expanded, but keep full ids on the section
         data: (searchQuery || expanded[c.title]) ? c.ids : [],
-      })),
+        allIds: c.ids,
+        labels: c.labels || {},
+      }));
+    },
     [effectiveNormalized, expanded, normalized, searchQuery],
   );
 
@@ -133,24 +155,15 @@ export const SectionListWithSearch: React.FC<Props> = ({
       persistentScrollbar
       renderSectionHeader={({ section }) => {
         const segItems: string[] = (section as any).data || [];
+        const allIds: string[] = (section as any).allIds || segItems;
         let segSelectedCount = 0;
         if (isMultiple) {
-          const set = new Set(selectedMany);
-          const base = (searchQuery ? effectiveNormalized : normalized).find(
-            c => c.title === section.title,
-          );
-          const full = base?.ids || segItems;
-          segSelectedCount = full.filter(id => set.has(String(id))).length;
+          const set = new Set(effectiveSelectedMany);
+          segSelectedCount = allIds.filter(id => set.has(String(id))).length;
         } else {
-          const base = (searchQuery ? effectiveNormalized : normalized).find(
-            c => c.title === section.title,
-          );
-          const full = base?.ids || segItems;
-          segSelectedCount = selectedOne && full.includes(String(selectedOne)) ? 1 : 0;
+          segSelectedCount = effectiveSelectedOne && allIds.includes(String(effectiveSelectedOne)) ? 1 : 0;
         }
-        const totalCount =
-          (searchQuery ? effectiveNormalized : normalized).find(c => c.title === section.title)?.ids
-            .length || segItems.length;
+        const totalCount = allIds.length;
         const headerTitle = `${section.title} (${segSelectedCount}/${totalCount})`;
         const isOpen = searchQuery ? true : expanded[section.title as string];
         return (
@@ -165,7 +178,7 @@ export const SectionListWithSearch: React.FC<Props> = ({
       }}
       renderItem={({ item, section }) => {
         const id = String(item);
-        const isSelected = isMultiple ? selectedMany.includes(id) : selectedOne === id;
+        const isSelected = isMultiple ? effectiveSelectedMany.includes(id) : effectiveSelectedOne === id;
         const onPress = () => onToggleItem(id);
         if (renderItem) {
           return (
@@ -183,9 +196,7 @@ export const SectionListWithSearch: React.FC<Props> = ({
             </Pressable>
           ) as any;
         }
-        const labelMap = (searchQuery ? effectiveNormalized : normalized).find(
-          s => s.title === (section as any).title,
-        )?.labels || {};
+        const labelMap = (section as any).labels || {};
         return (
           <List.Item
             title={labelMap[id] || id}
