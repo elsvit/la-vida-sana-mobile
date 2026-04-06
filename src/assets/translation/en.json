@@ -10,6 +10,7 @@
     "loading": "Loading...",
     "no_data_found": "No data found",
     "rating": "Rating",
+    "required": "Required",
     "search": "Search",
     "step": "Step",
     "stepIndicator": "Step {{step}} of {{totalSteps}}",
@@ -157,6 +158,7 @@
   "more": {
     "title": "More",
     "add_user": "Add User",
+    "remove_all_users": "Remove All Users",
     "language": "Language",
     "settings": "Settings",
     "users": "Users"

@@ -76,6 +76,11 @@ export default function More() {
           Icon: UserPlusIcon,
           navigateTo: EScreens.UserAdd,
         },
+        {
+          title: t('more.remove_all_users'),
+          Icon: UserPlusIcon,
+          navigateTo: EScreens.UsersRemove,
+        },
       ],
     },
 

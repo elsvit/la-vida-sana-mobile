@@ -38,8 +38,6 @@ export enum EWeeklyGoalApproach {
 
 export interface IUser {
   id: string;
-  createdAt: string;
-  updatedAt?: string;
   name: string;
   lastName?: string;
   email?: string; // not for now
@@ -59,6 +57,8 @@ export interface IUser {
   weeklyBudget?: number; // €
   sellers?: ESeller[];
   isDisabled?: boolean;
+  updatedAt?: string;
+  createdAt: string;
 }
 
-export type UserFormProps = Omit<IUser, 'id' | 'createdAt' | 'updatedAt'>;
+export type UserFormProps = Omit<IUser, 'id' | 'updatedAt' | 'createdAt'>;

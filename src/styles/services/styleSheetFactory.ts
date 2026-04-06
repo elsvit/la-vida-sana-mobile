@@ -1,5 +1,6 @@
 import { darkPalette, lightPalette } from '~/styles';
-import { registerThemes } from '~/styles';
+
+import { registerThemes } from './registerThemes';
 
 const useColorScheme = (): 'light' | 'dark' => 'light';
 
